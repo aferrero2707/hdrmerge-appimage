@@ -9,12 +9,14 @@ dist: trusty
 
 addons:
   apt:
+    sources:
+      - sourceline: 'ppa:beineri/opt-qt58-trusty'
     packages:
       - g++
       - gettext
       - intltool
       #- libqt4-dev
-      - qtbase5-dev
+      - qt58base-dev
       - autoconf
       - automake
       - libexiv2-dev
