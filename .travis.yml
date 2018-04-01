@@ -46,8 +46,8 @@ before_script:
     - make -j2
     - sudo make install
     - cd ..
-    - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr ..
-    - make DESTDIR=$TRAVIS_BUILD_DIR/appdir -j2 install
+    - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/zyx ..
+    #- make DESTDIR=$TRAVIS_BUILD_DIR/appdir -j2 install
     - cd ..
 
 script:
