@@ -13,7 +13,7 @@ addons:
       - g++
       - gettext
       - intltool
-      - libqt4-dev
+      - libqt5-dev
       - autoconf
       - automake
       - libexiv2-dev
