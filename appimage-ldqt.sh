@@ -43,6 +43,53 @@ export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH
 
 cd $TRAVIS_BUILD_DIR
 
+mkdir -p appdir/usr/share/icons
+mkdir -p appdir/usr/share/applications
+
+#cp ./usr/share/applications/$LOWERAPP.desktop .
+#sed -i -e "s|gimp-2.9|$LOWERAPP|g" $LOWERAPP.desktop
+rm -rf ./usr/share/icons/48x48/apps || true
+cp $TRAVIS_BUILD_DIR/images/icon.png appdir/usr/share/icons/$LOWERAPP.png
+
+# The original desktop file is a bit strange, hence we provide our own
+cat > appdir/usr/share/applications/$LOWERAPP.desktop <<\EOF
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=hdrmerge
+GenericName=HDR raw image merge
+GenericName[es]=Mezcla de imágenes HDR raw
+Comment=Merge several raw images into a single DNG raw image with high dynamic range.
+Comment[es]=Mezcla varias imágenes raw en una única imagen DNG raw de alto rango dinámico.
+Exec=LOWERAPP %f
+TryExec=LOWERAPP
+Icon=ICON
+Terminal=false
+Categories=Graphics;
+MimeType=image/x-dcraw;image/x-adobe-dng;
+EOF
+sed -i -e "s|LOWERAPP|$LOWERAPP|g" appdir/usr/share/applications/$LOWERAPP.desktop
+sed -i -e "s|ICON|$LOWERAPP|g" appdir/usr/share/applications/$LOWERAPP.desktop
+cat appdir/usr/share/applications/$LOWERAPP.desktop
+
+unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
+cd $TRAVIS_BUILD_DIR
+export VERSION=$(git rev-parse --short HEAD) # linuxdeployqt uses this for naming the file
+#mkdir -p /ai && cd /ai
+
+if [ x"${USE_LDQT}" = "x1"]; then
+wget https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
+chmod +x linuxdeployqt-continuous-x86_64.AppImage
+./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/$LOWERAPP.desktop -bundle-non-qt-libs
+./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/$LOWERAPP.desktop -appimage
+
+find . -name "hdrmerge*.AppImage"
+transfer hdrmerge*.AppImage
+echo "AppImage has been uploaded to the URL above; use something like GitHub Releases for permanent storage"
+
+exit
+fi
+
 pwd
 
 mkdir -p $APP/$APP.AppDir
@@ -67,47 +114,11 @@ EOF
 sed -i -e "s|LOWERAPP|$LOWERAPP|g" usr/bin/$LOWERAPP
 chmod u+x usr/bin/$LOWERAPP
 
-mkdir -p usr/share/icons
-mkdir -p usr/share/applications
 
-#cp ./usr/share/applications/$LOWERAPP.desktop .
-#sed -i -e "s|gimp-2.9|$LOWERAPP|g" $LOWERAPP.desktop
-rm -rf ./usr/share/icons/48x48/apps || true
-cp $TRAVIS_BUILD_DIR/hdrmerge/data/images/icon.png usr/share/icons/$LOWERAPP.png
-cp $TRAVIS_BUILD_DIR/hdrmerge/data/images/icon.png $LOWERAPP.png
-
-# The original desktop file is a bit strange, hence we provide our own
-cat > usr/share/applications/$LOWERAPP.desktop <<\EOF
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=hdrmerge
-GenericName=HDR raw image merge
-GenericName[es]=Mezcla de imágenes HDR raw
-Comment=Merge several raw images into a single DNG raw image with high dynamic range.
-Comment[es]=Mezcla varias imágenes raw en una única imagen DNG raw de alto rango dinámico.
-Exec=LOWERAPP %f
-TryExec=LOWERAPP
-Icon=ICON
-Terminal=false
-Categories=Graphics;
-MimeType=image/x-dcraw;image/x-adobe-dng;
-EOF
-sed -i -e "s|LOWERAPP|$LOWERAPP|g" usr/share/applications/$LOWERAPP.desktop
-sed -i -e "s|ICON|$LOWERAPP|g" usr/share/applications/$LOWERAPP.desktop
-cat usr/share/applications/$LOWERAPP.desktop
-
-#unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
-export VERSION=$(git rev-parse --short HEAD) # linuxdeployqt uses this for naming the file
-#mkdir -p /ai && cd /ai
-
-
-
-#get_apprun
-cp -a $TRAVIS_BUILD_DIR/AppRun ./AppRun
+get_apprun
 
 mkdir -p usr/lib/qt4/plugins
-cp -a /usr/lib/x86_64-linux-gnu/qt5/plugins/* usr/lib/qt5/plugins
+cp -a /usr/lib/x86_64-linux-gnu/qt4/plugins/* usr/lib/qt4/plugins
 
 # Copy in the indirect dependencies
 copy_deps ; copy_deps ; copy_deps # Three runs to ensure we catch indirect ones
@@ -139,12 +150,11 @@ find usr/ -type f -exec sed -i -e "s|/usr|././|g" {} \;
 cp $(ldconfig -p | grep libgdk-x11-2.0.so.0 | cut -d ">" -f 2 | xargs) ./usr/lib/
 cp $(ldconfig -p | grep libgtk-x11-2.0.so.0 | cut -d ">" -f 2 | xargs) ./usr/lib/
 
+VER1=$APP_VERSION-$(date +%Y%m%d)
 GLIBC_NEEDED=$(glibc_needed)
-wd=$(pwd)
-cd $TRAVIS_BUILD_DIR/hdrmerge
-export VERSION=$(git rev-parse --short HEAD)-$(date +%Y%m%d).glibc$GLIBC_NEEDED
+VERSION=git-${TRAVIS_BRANCH}-${TRAVIS_COMMIT}-$(date +%Y%m%d).glibc$GLIBC_NEEDED
+#VERSION=$VER1.glibc$GLIBC_NEEDED
 echo $VERSION
-cd "$wd"
 
 get_desktopintegration $LOWERAPP
 #cp -a ../../desktopintegration ./usr/bin/$LOWERAPP.wrapper
