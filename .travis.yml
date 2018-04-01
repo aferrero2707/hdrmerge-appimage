@@ -23,9 +23,9 @@ addons:
       - libalglib-dev
       - libboost-all-dev
 
-env:
-    - PATH="/opt/qt58/bin:$PATH"
-    - LD_LIBRARY_PATH="/opt/qt58/lib:$LD_LIBRARY_PATH"
+#env:
+#    - PATH="/opt/qt58/bin:$PATH"
+#    - LD_LIBRARY_PATH="/opt/qt58/lib:$LD_LIBRARY_PATH"
 
 before_script:
     - /opt/qt58/bin/qt58-env.sh
