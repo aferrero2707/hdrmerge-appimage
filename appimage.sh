@@ -96,6 +96,7 @@ EOF
 sed -i -e "s|LOWERAPP|$LOWERAPP|g" usr/share/applications/$LOWERAPP.desktop
 sed -i -e "s|ICON|$LOWERAPP|g" usr/share/applications/$LOWERAPP.desktop
 cat usr/share/applications/$LOWERAPP.desktop
+cp usr/share/applications/$LOWERAPP.desktop ./$LOWERAPP.desktop
 
 #unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
 export VERSION=$(git rev-parse --short HEAD) # linuxdeployqt uses this for naming the file
