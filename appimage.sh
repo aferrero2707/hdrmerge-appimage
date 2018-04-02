@@ -5,7 +5,8 @@ move_blacklisted()
 {
   mkdir -p ./usr/lib-blacklisted
   #BLACKLISTED_FILES=$(wget -q https://github.com/probonopd/AppImages/raw/master/excludelist -O - | sed '/^\s*$/d' | sed '/^#.*$/d')
-  BLACKLISTED_FILES=$(cat $APPIMAGEBASE/AppImages/excludelist | sed '/^\s*$/d' | sed '/^#.*$/d')
+  #BLACKLISTED_FILES=$(cat $APPIMAGEBASE/AppImages/excludelist | sed '/^\s*$/d' | sed '/^#.*$/d')
+  BLACKLISTED_FILES=$(cat "$APPIMAGEBASE/excludelist" | sed '/^\s*$/d' | sed '/^#.*$/d')
   echo $BLACKLISTED_FILES
   for FILE in $BLACKLISTED_FILES ; do
     FOUND=$(find . -type f -name "${FILE}" 2>/dev/null)
@@ -30,7 +31,6 @@ REBUILD=1
 
 rm -rf out $APP
 
-WD=$(pwd)
 
 PREFIX=/zyx
 export PATH=$PREFIX/bin:$PATH
@@ -44,6 +44,10 @@ export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH
 cd $TRAVIS_BUILD_DIR
 
 pwd
+WD=$(pwd)
+export APPIMAGEBASE=$(pwd)
+
+ls
 
 mkdir -p $APP/$APP.AppDir
 cd $APP/$APP.AppDir
@@ -107,17 +111,25 @@ export VERSION=$(git rev-parse --short HEAD) # linuxdeployqt uses this for namin
 #get_apprun
 cp -a $TRAVIS_BUILD_DIR/AppRun ./AppRun
 
-mkdir -p usr/lib/qt4/plugins
-cp -a /usr/lib/x86_64-linux-gnu/qt5/plugins/* usr/lib/qt5/plugins
+mkdir -p usr/lib/qt5/plugins
+#cp -a /usr/lib/x86_64-linux-gnu/qt5/plugins/* usr/lib/qt5/plugins
+cp -a /opt/qt58/plugins/* usr/lib/qt5/plugins
 
 # Copy in the indirect dependencies
 copy_deps ; copy_deps ; copy_deps # Three runs to ensure we catch indirect ones
 
-cp -a app/lib/* usr/lib
-cp -a app/lib64/* usr/lib64
-rm -rf app
+cp -L usr/lib/x86_64-linux-gnu/* usr/lib
+rm -rf usr/lib/x86_64-linux-gnu
+cp -a opt/qt58/lib/* usr/lib
+cp -a zyx/lib/* usr/lib
+cp -a zyx/lib64/* usr/lib64
+rm -rf zyx
 
 move_lib
+
+ls usr/lib
+
+#exit
 
 delete_blacklisted
 #move_blacklisted

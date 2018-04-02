@@ -5,9 +5,9 @@ DIR="`( cd \"$DIR\" && readlink -f $(pwd) )`"
 echo "DIR: $DIR"
 export APPDIR=$DIR
 
-export APPIMAGE_ORIGINAL_LD_PRELOAD=$LD_PRELOAD
-export LD_PRELOAD=$DIR/usr/lib/exec_wrapper.so
-export APPIMAGE_STARTUP_LD_PRELOAD=$LD_PRELOAD
+#export APPIMAGE_ORIGINAL_LD_PRELOAD=$LD_PRELOAD
+#export LD_PRELOAD=$DIR/usr/lib/exec_wrapper.so
+#export APPIMAGE_STARTUP_LD_PRELOAD=$LD_PRELOAD
 
 
 
@@ -95,6 +95,10 @@ cat $GDK_PIXBUF_MODULE_FILE
 
 if [ -e /etc/fonts/fonts.conf ]; then
   export FONTCONFIG_PATH=/etc/fonts
+fi
+
+if [ -e /usr/share/X11/xkb ]; then
+  export XKB_CONFIG_ROOT=/usr/share/X11/xkb
 fi
 
 export KDE_FORK_SLAVES=1

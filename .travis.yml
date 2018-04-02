@@ -22,6 +22,7 @@ addons:
       - libexiv2-dev
       - libalglib-dev
       - libboost-all-dev
+      - mesa-common-dev
 
 #env:
 #    - PATH="/opt/qt58/bin:$PATH"
