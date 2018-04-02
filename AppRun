@@ -99,6 +99,7 @@ fi
 
 if [ -e /usr/share/X11/xkb ]; then
   export XKB_CONFIG_ROOT=/usr/share/X11/xkb
+  export QT_XKB_CONFIG_ROOT=/usr/share/X11/xkb
 fi
 
 export KDE_FORK_SLAVES=1
