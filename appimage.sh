@@ -120,6 +120,8 @@ cp -a /opt/qt58/plugins/* usr/lib/qt5/plugins
 # Copy in the indirect dependencies
 copy_deps ; copy_deps ; copy_deps # Three runs to ensure we catch indirect ones
 
+move_lib
+
 echo ""
 echo "ls usr/lib/x86_64-linux-gnu"
 ls usr/lib/x86_64-linux-gnu
@@ -130,8 +132,6 @@ cp -a opt/qt58/lib/* usr/lib
 cp -a zyx/lib/* usr/lib
 cp -a zyx/lib64/* usr/lib64
 rm -rf zyx
-
-move_lib
 
 echo ""
 echo "ls usr/lib"
