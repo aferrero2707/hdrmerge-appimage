@@ -31,6 +31,8 @@ REBUILD=1
 
 rm -rf out $APP
 
+source /opt/qt58/bin/qt58-env.sh
+
 
 PREFIX=/zyx
 export PATH=$PREFIX/bin:$PATH
