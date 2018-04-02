@@ -184,6 +184,8 @@ generate_appimage
 # Upload the AppDir
 ########################################################################
 
+pwd
+ls ../out/*
 transfer ../out/*
 echo ""
 echo "AppImage has been uploaded to the URL above; use something like GitHub Releases for permanent storage"

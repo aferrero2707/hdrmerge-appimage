@@ -61,3 +61,8 @@ script:
     - wget -c https://github.com/aferrero2707/uploadtool/raw/master/upload_rotate.sh
     - bash  ./upload_rotate.sh "continuous" out/* >& /dev/null
 
+branches:
+  except:
+    - # Do not build tags that we create when we upload to GitHub Releases
+    - /^(?i:continuous)$/
+
