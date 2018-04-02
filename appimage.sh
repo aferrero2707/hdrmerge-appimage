@@ -163,7 +163,8 @@ cp $(ldconfig -p | grep libgtk-x11-2.0.so.0 | cut -d ">" -f 2 | xargs) ./usr/lib
 GLIBC_NEEDED=$(glibc_needed)
 wd=$(pwd)
 cd $TRAVIS_BUILD_DIR/hdrmerge
-export VERSION=$(git rev-parse --short HEAD)-$(date +%Y%m%d).glibc$GLIBC_NEEDED
+#export VERSION=$(git rev-parse --short HEAD)-$(date +%Y%m%d).glibc$GLIBC_NEEDED
+export VERSION=git-$(date +%Y%m%d)
 echo $VERSION
 cd "$wd"
 
@@ -184,4 +185,5 @@ generate_appimage
 ########################################################################
 
 transfer ../out/*
+echo ""
 echo "AppImage has been uploaded to the URL above; use something like GitHub Releases for permanent storage"
