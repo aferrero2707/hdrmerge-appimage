@@ -57,3 +57,7 @@ script:
     - mkdir -p appimage
     - cp $TRAVIS_BUILD_DIR/appimage.sh appimage
     - bash appimage/appimage.sh
+    - ls out/* 
+    - wget -c https://github.com/aferrero2707/uploadtool/raw/master/upload_rotate.sh
+    - bash  ./upload_rotate.sh "continuous" out/* >& /dev/null
+
