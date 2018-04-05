@@ -29,6 +29,7 @@ addons:
 #    - LD_LIBRARY_PATH="/opt/qt58/lib:$LD_LIBRARY_PATH"
 
 before_script:
+    - echo "SLUG: $TRAVIS_REPO_SLUG"
     - cat /opt/qt58/bin/qt58-env.sh
     - source /opt/qt58/bin/qt58-env.sh
     - git clone https://github.com/jcelaya/hdrmerge.git
