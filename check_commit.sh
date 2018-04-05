@@ -7,11 +7,10 @@ echo "########################################################################"
 echo ""
 echo "Checking commit hash"
 echo ""
-echo "REPO_SLUG: $REPO_SLUG"
 sudo apt-get -y update
 sudo apt-get install -y wget git || exit 1
 rm -f /tmp/commit-${GIT_BRANCH}.hash
-wget https://github.com/aferrero2707/hdrmerge-appimage/releases/download/continuous/commit-${GIT_BRANCH}.hash -O /tmp/commit-${GIT_BRANCH}.hash
+wget https://github.com/jcelaya/hdrmerge/releases/download/nightly/commit-${GIT_BRANCH}.hash -O /tmp/commit-${GIT_BRANCH}.hash
 
 rm -f travis.cancel
 if  [ -e /tmp/commit-${GIT_BRANCH}.hash ]; then
