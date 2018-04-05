@@ -30,7 +30,7 @@ addons:
 
 before_script:
     - cat /opt/qt58/bin/qt58-env.sh
-    - /opt/qt58/bin/qt58-env.sh
+    - source /opt/qt58/bin/qt58-env.sh
     - git clone https://github.com/jcelaya/hdrmerge.git
     - cd hdrmerge
     - ../check_commit.sh master
