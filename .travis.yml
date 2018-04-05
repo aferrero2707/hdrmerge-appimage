@@ -33,6 +33,10 @@ before_script:
     - /opt/qt58/bin/qt58-env.sh
     - git clone https://github.com/jcelaya/hdrmerge.git
     - cd hdrmerge
+    - ../check_commit.sh master
+    - 'if [ -e travis.cancel ]; then
+          exit 0;
+      fi'
     - mkdir -p build
     - cd build
     - export PKG_CONFIG_PATH=/zyx/lib/pkgconfig:${PKG_CONFIG_PATH}
@@ -66,6 +70,7 @@ after_success:
     #- wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
     - wget -c https://github.com/aferrero2707/uploadtool/raw/master/upload_rotate.sh
     - bash  ./upload_rotate.sh "continuous" out/*
+    - bash  ./upload_rotate.sh "continuous" $TRAVIS_BUILD_DIR/hdrmerge/commit-master.hash >& /dev/null
 
 branches:
   except:
