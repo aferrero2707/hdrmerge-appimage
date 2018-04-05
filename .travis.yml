@@ -33,7 +33,7 @@ before_script:
     - source /opt/qt58/bin/qt58-env.sh
     - git clone https://github.com/jcelaya/hdrmerge.git
     - cd hdrmerge
-    - ../check_commit.sh master
+    - bash ../check_commit.sh master
     - 'if [ -e travis.cancel ]; then
           exit 0;
       fi'
