@@ -29,7 +29,7 @@ addons:
 #    - LD_LIBRARY_PATH="/opt/qt58/lib:$LD_LIBRARY_PATH"
 
 before_script:
-    - echo "SLUG: $TRAVIS_REPO_SLUG"
+    #- echo "SLUG: $TRAVIS_REPO_SLUG"
     - cat /opt/qt58/bin/qt58-env.sh
     - source /opt/qt58/bin/qt58-env.sh
     - git clone https://github.com/jcelaya/hdrmerge.git
@@ -70,8 +70,8 @@ after_success:
     - ls -lh out/* # Assuming you have some files in out/ that you would like to upload
     #- wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
     - wget -c https://github.com/aferrero2707/uploadtool/raw/master/upload_rotate.sh
-    - bash  ./upload_rotate.sh "continuous" out/*
-    - bash  ./upload_rotate.sh "continuous" $TRAVIS_BUILD_DIR/hdrmerge/commit-master.hash >& /dev/null
+    - TRAVIS_REPO_SLUG="jcelaya/hdrmerge" bash  ./upload_rotate.sh "nightly" out/*
+    - TRAVIS_REPO_SLUG="jcelaya/hdrmerge" bash  ./upload_rotate.sh "nightly" $TRAVIS_BUILD_DIR/hdrmerge/commit-master.hash >& /dev/null
 
 branches:
   except:
