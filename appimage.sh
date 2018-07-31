@@ -176,9 +176,23 @@ get_desktopintegration $LOWERAPP
 # Go out of AppImage
 cd ..
 
+wd=$(pwd)
 mkdir -p ../out/
 ARCH="x86_64"
-generate_appimage
+#generate_appimage
+# Download AppImageAssistant
+URL="https://github.com/AppImage/AppImageKit/releases/download/6/AppImageAssistant_6-x86_64.AppImage"
+rm -f AppImageAssistant
+wget -c "$URL" -O AppImageAssistant
+chmod a+x ./AppImageAssistant
+(rm -rf /tmp/squashfs-root && mkdir /tmp/squashfs-root && cd /tmp/squashfs-root && bsdtar xfp $wd/AppImageAssistant) || exit 1
+#./AppImageAssistant --appimage-extract
+mkdir -p ../out || true
+rm ../out/$APP"-"$VERSION".glibc"$GLIBC_NEEDED"-"$ARCH".AppImage" 2>/dev/null || true
+GLIBC_NEEDED=$(glibc_needed)
+/tmp/squashfs-root/AppRun ./$APP.AppDir/ ../out/$APP"-"$VERSION".glibc"$GLIBC_NEEDED"-"$ARCH".AppImage"
+ 
+
 
 ########################################################################
 # Upload the AppDir

@@ -106,14 +106,12 @@ export KDE_FORK_SLAVES=1
 
 export KDEV_DISABLE_PLUGINS=KDevWelcomePage
 
-cd $DIR/usr
-
-#bin/gimp "$@"; exit
+#cd $DIR/usr
 
 echo "Input parameters: \"$@\""
 echo ""
 echo "Input File: $1"
-ldd bin/hdrmerge.bin
+ldd $DIR/usr/bin/hdrmerge.bin
 echo ""
-echo "$HERE/hdrmerge.bin \"$@\""
-bin/hdrmerge.bin "$@"
+echo "$DIR/usr/bin/hdrmerge.bin \"$@\""
+$DIR/usr/bin/hdrmerge.bin "$@"
