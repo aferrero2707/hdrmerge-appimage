@@ -23,6 +23,7 @@ addons:
       - libalglib-dev
       - libboost-all-dev
       - mesa-common-dev
+      - bsdtar
 
 #env:
 #    - PATH="/opt/qt58/bin:$PATH"
