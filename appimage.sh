@@ -176,7 +176,7 @@ get_desktopintegration $LOWERAPP
 # Go out of AppImage
 cd ..
 
-wd=$(pwd)
+wd="$(pwd)"
 mkdir -p ../out/
 ARCH="x86_64"
 #generate_appimage
@@ -188,9 +188,10 @@ chmod a+x ./AppImageAssistant
 (rm -rf /tmp/squashfs-root && mkdir /tmp/squashfs-root && cd /tmp/squashfs-root && bsdtar xfp $wd/AppImageAssistant) || exit 1
 #./AppImageAssistant --appimage-extract
 mkdir -p ../out || true
-rm ../out/$APP"-"$VERSION".glibc"$GLIBC_NEEDED"-"$ARCH".AppImage" 2>/dev/null || true
 GLIBC_NEEDED=$(glibc_needed)
-/tmp/squashfs-root/AppRun ./$APP.AppDir/ ../out/$APP"-"$VERSION".glibc"$GLIBC_NEEDED"-"$ARCH".AppImage"
+AI_OUT="../out/${APP}-${VERSION}.glibc${GLIBC_NEEDED}-${ARCH}.AppImage"
+rm "${AI_OUT}" 2>/dev/null || true
+/tmp/squashfs-root/AppRun ./$APP.AppDir/ "${AI_OUT}"
  
 
 
