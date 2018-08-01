@@ -111,7 +111,7 @@ export KDEV_DISABLE_PLUGINS=KDevWelcomePage
 echo "Input parameters: \"$@\""
 echo ""
 echo "Input File: $1"
-ldd $DIR/usr/bin/hdrmerge.bin
+ldd "$DIR/usr/bin/hdrmerge.bin"
 echo ""
 echo "$DIR/usr/bin/hdrmerge.bin \"$@\""
-$DIR/usr/bin/hdrmerge.bin "$@"
+"$DIR/usr/bin/hdrmerge.bin" "$@"
