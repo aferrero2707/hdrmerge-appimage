@@ -39,6 +39,7 @@ before_script:
     #  fi'
 
 script:
+    - cd $TRAVIS_BUILD_DIR
     - sudo docker run -it -v $(pwd):/sources centos:7 bash /sources/mkappimage.sh
 
 after_success:
