@@ -2,6 +2,13 @@ language: generic
 
 sudo: required
 
+services:
+  - docker
+
+addons:
+  apt:
+    packages:
+      - git
 
 before_script:
     #- echo "SLUG: $TRAVIS_REPO_SLUG"
