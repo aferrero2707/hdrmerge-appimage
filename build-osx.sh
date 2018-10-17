@@ -27,6 +27,9 @@ autoreconf --install || exit 1
 make -j2 install || exit 1
 cd ..
 pwd
-cmake3 -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local .. || exit 1
+curl -L http://www.alglib.net/translator/re/alglib-3.14.0.cpp.gpl.tgz -O || exit 1
+tar xf alglib-3.14.0.cpp.gpl.tgz || exit 1
+export ALGLIB_ROOT=$(pwd)/cpp
+cmake3 -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DALGLIB_ROOT=$ALGLIB_ROOT -DALGLIB_INCLUDES=$ALGLIB_ROOT/src -DALGLIB_LIBRARIES=$ALGLIB_ROOT/src .. || exit 1
 make -j2 install || exit 1
 cd ..
