@@ -30,6 +30,6 @@ pwd
 curl -L http://www.alglib.net/translator/re/alglib-3.14.0.cpp.gpl.tgz -O || exit 1
 tar xf alglib-3.14.0.cpp.gpl.tgz || exit 1
 export ALGLIB_ROOT=$(pwd)/cpp
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DALGLIB_ROOT=$ALGLIB_ROOT -DALGLIB_INCLUDES=$ALGLIB_ROOT/src -DALGLIB_LIBRARIES=$ALGLIB_ROOT/src .. || exit 1
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk" -DCMAKE_INSTALL_PREFIX=/usr/local -DALGLIB_ROOT=$ALGLIB_ROOT -DALGLIB_INCLUDES=$ALGLIB_ROOT/src -DALGLIB_LIBRARIES=$ALGLIB_ROOT/src -DCMAKE_INSTALL_BINDIR=$(pwd)/install .. || exit 1
 make -j2 install || exit 1
 cd ..
