@@ -13,6 +13,7 @@ addons:
   apt:
     packages:
       - git
+      - wget
 
 before_script:
     #- echo "SLUG: $TRAVIS_REPO_SLUG"

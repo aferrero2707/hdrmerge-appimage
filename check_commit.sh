@@ -8,8 +8,8 @@ echo "########################################################################"
 echo ""
 echo "Checking commit hash"
 echo ""
-sudo apt-get -y update
-sudo apt-get install -y wget git || exit 1
+#sudo apt-get -y update
+#sudo apt-get install -y wget git || exit 1
 rm -f /tmp/commit-${GIT_BRANCH}-${OS_NAME}.hash
 wget https://github.com/jcelaya/hdrmerge/releases/download/nightly/commit-${GIT_BRANCH}-${OS_NAME}.hash -O /tmp/commit-${GIT_BRANCH}-${OS_NAME}.hash
 
