@@ -27,6 +27,6 @@ autoreconf --install || exit 1
 make -j2 install || exit 1
 cd ..
 pwd
-cmake3 -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local .. || exit 1
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local .. || exit 1
 make -j2 install || exit 1
 cd ..
