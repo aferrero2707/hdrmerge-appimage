@@ -32,4 +32,12 @@ tar xf alglib-3.14.0.cpp.gpl.tgz || exit 1
 export ALGLIB_ROOT=$(pwd)/cpp
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk" -DCMAKE_INSTALL_PREFIX=/usr/local -DALGLIB_ROOT=$ALGLIB_ROOT -DALGLIB_INCLUDES=$ALGLIB_ROOT/src -DALGLIB_LIBRARIES=$ALGLIB_ROOT/src -DCMAKE_INSTALL_BINDIR=$(pwd)/install .. || exit 1
 make -j2 install || exit 1
-cd ..
+
+mkdir install/hdrmerge.app/Contents/Frameworks
+#sudo cp /opt/local/lib/libomp/libiomp5.dylib ~/hdrmerge/build/install/hdrmerge.app/Contents/Frameworks/.
+cp /usr/local/lib/libexiv2.26.dylib install/hdrmerge.app/Contents/Frameworks
+
+macdeployqt $(pwd)/install/hdrmerge.app -no-strip -verbose=3
+install_name_tool -add_rpath "@executable_path/../Frameworks" install/hdrmerge.app/Contents/MacOS/hdrmerge
+mkdir -p $TRAVIS_BUILD_DIR/out
+hdiutil create -ov -srcfolder $(pwd)/install/hdrmerge.app $TRAVIS_BUILD_DIR/out/HDRMerge.dmg
