@@ -132,7 +132,7 @@ generate_type2_appimage
 
 pwd
 ls ../out/*
-mkdir -p /source/out
+mkdir -p /sources/out
 cp ../out/*.AppImage /sources/out
 
 ########################################################################

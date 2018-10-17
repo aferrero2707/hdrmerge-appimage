@@ -1,58 +1,45 @@
 language: generic
 
-compiler:
-    - g++
-
 sudo: required
 
-dist: trusty
+os:
+  #- linux
+  - osx
+
+services:
+  - docker
 
 addons:
   apt:
-    sources:
-      - sourceline: 'ppa:beineri/opt-qt58-trusty'
     packages:
-      - g++
-      - gettext
-      - intltool
-      #- libqt4-dev
-      - qt58base
-      - autoconf
-      - automake
-      - libexiv2-dev
-      - libalglib-dev
-      - libboost-all-dev
-      - mesa-common-dev
-      - bsdtar
-
-#env:
-#    - PATH="/opt/qt58/bin:$PATH"
-#    - LD_LIBRARY_PATH="/opt/qt58/lib:$LD_LIBRARY_PATH"
+      - git
 
 before_script:
     #- echo "SLUG: $TRAVIS_REPO_SLUG"
     - git clone https://github.com/jcelaya/hdrmerge.git
     - cd hdrmerge
-    - bash ../check_commit.sh master
-    #- 'if [ -e travis.cancel ]; then
-    #      exit 0;
-    #  fi'
+    - bash ../check_commit.sh master "$TRAVIS_OS_NAME"
+    - 'if [ -e travis.cancel ]; then
+          exit 0;
+      fi'
 
 script:
     - cd $TRAVIS_BUILD_DIR
-    - sudo docker run -it -v $(pwd):/sources centos:7 bash /sources/mkappimage.sh
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo docker run -it -v $(pwd):/sources centos:7 bash /sources/mkappimage.sh; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then bash ./build-osx.sh; fi
+    
 
 after_success:
     - cd $TRAVIS_BUILD_DIR
     - pwd
     - ls -lh
-    - ls -lh out/* # Assuming you have some files in out/ that you would like to upload
+    #- ls -lh out/* # Assuming you have some files in out/ that you would like to upload
     #- wget -c https://github.com/aferrero2707/uploadtool/raw/master/remove.sh
     #- TRAVIS_REPO_SLUG="jcelaya/hdrmerge" bash ./remove.sh "nightly" "hdrmerge-git-" ".AppImage"
-    - wget -c https://github.com/aferrero2707/uploadtool/raw/master/upload_rotate.sh
+    #- wget -c https://github.com/aferrero2707/uploadtool/raw/master/upload_rotate.sh
     #- TRAVIS_REPO_SLUG="jcelaya/hdrmerge" bash  ./upload_rotate.sh "nightly" out/*
-    #- TRAVIS_REPO_SLUG="jcelaya/hdrmerge" bash  ./upload_rotate.sh "nightly" $TRAVIS_BUILD_DIR/hdrmerge/commit-master.hash >& /dev/null
-    - bash  ./upload_rotate.sh "continuous" out/*
+    #- TRAVIS_REPO_SLUG="jcelaya/hdrmerge" bash  ./upload_rotate.sh "nightly" $TRAVIS_BUILD_DIR/hdrmerge/commit-master-${TRAVIS_OS_NAME}.hash >& /dev/null
+    #- bash  ./upload_rotate.sh "continuous" out/*
 
 branches:
   except:
