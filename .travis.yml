@@ -14,6 +14,7 @@ addons:
     packages:
       - git
       - wget
+      - curl
 
 before_script:
     #- echo "SLUG: $TRAVIS_REPO_SLUG"

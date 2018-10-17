@@ -11,7 +11,8 @@ echo ""
 #sudo apt-get -y update
 #sudo apt-get install -y wget git || exit 1
 rm -f /tmp/commit-${GIT_BRANCH}-${OS_NAME}.hash
-wget https://github.com/jcelaya/hdrmerge/releases/download/nightly/commit-${GIT_BRANCH}-${OS_NAME}.hash -O /tmp/commit-${GIT_BRANCH}-${OS_NAME}.hash
+#wget https://github.com/jcelaya/hdrmerge/releases/download/nightly/commit-${GIT_BRANCH}-${OS_NAME}.hash -O /tmp/commit-${GIT_BRANCH}-${OS_NAME}.hash
+curl -L https://github.com/jcelaya/hdrmerge/releases/download/nightly/commit-${GIT_BRANCH}-${OS_NAME}.hash -o /tmp/commit-${GIT_BRANCH}-${OS_NAME}.hash
 
 rm -f travis.cancel
 if  [ -e /tmp/commit-${GIT_BRANCH}-${OS_NAME}.hash ]; then
