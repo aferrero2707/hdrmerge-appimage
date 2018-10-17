@@ -3,10 +3,10 @@
 brew cask uninstall oclint
 brew reinstall little-cms2 fftw curl zlib exiv2 || exit 1
 
-HASH=9ba3d6ef8891e5c15dbdc9333f857b13711d4e97 #qt@5.5
-QTPREFIX="qt@5.5"
-#HASH=13d52537d1e0e5f913de46390123436d220035f6 #qt 5.9
-#QTPREFIX="qt"
+#HASH=9ba3d6ef8891e5c15dbdc9333f857b13711d4e97 #qt@5.5
+#QTPREFIX="qt@5.5"
+HASH=13d52537d1e0e5f913de46390123436d220035f6 #qt 5.9
+QTPREFIX="qt"
 (cd $( brew --prefix )/Homebrew/Library/Taps/homebrew/homebrew-core && \
   git pull --unshallow && git checkout $HASH -- Formula/${QTPREFIX}.rb && \
   cat Formula/${QTPREFIX}.rb | sed -e 's|depends_on :mysql|depends_on "mysql-client"|g' | sed -e 's|depends_on :postgresql|depends_on "postgresql"|g' > /tmp/${QTPREFIX}.rb && cp /tmp/${QTPREFIX}.rb Formula/${QTPREFIX}.rb &&
