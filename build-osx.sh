@@ -44,4 +44,4 @@ cp /usr/local/lib/libexiv2.26.dylib install/hdrmerge.app/Contents/Frameworks
 macdeployqt $(pwd)/install/hdrmerge.app -no-strip -verbose=3
 install_name_tool -add_rpath "@executable_path/../Frameworks" install/hdrmerge.app/Contents/MacOS/hdrmerge
 mkdir -p $TRAVIS_BUILD_DIR/out
-hdiutil create -ov -srcfolder $(pwd)/install/hdrmerge.app $TRAVIS_BUILD_DIR/out/HDRMerge.dmg
+hdiutil create -ov -srcfolder $(pwd)/install/hdrmerge.app $TRAVIS_BUILD_DIR/out/HDRMerge-$GHTAG.dmg
