@@ -6,6 +6,8 @@ os:
   #- linux
   - osx
 
+osx_image: xcode8
+
 services:
   - docker
 
@@ -16,6 +18,9 @@ addons:
       - wget
       - curl
 
+before_install:
+    - brew update
+  
 before_script:
     #- echo "SLUG: $TRAVIS_REPO_SLUG"
     - git clone https://github.com/jcelaya/hdrmerge.git
@@ -47,4 +52,3 @@ branches:
   except:
     - # Do not build tags that we create when we upload to GitHub Releases
     - /^(?i:continuous)$/
-
