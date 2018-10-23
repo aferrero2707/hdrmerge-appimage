@@ -24,7 +24,7 @@ before_install:
 before_script:
     #- echo "SLUG: $TRAVIS_REPO_SLUG"
     - git clone https://github.com/jcelaya/hdrmerge.git
-    - cd hdrmerge
+    - cd hdrmerge && export GHTAG=$(git describe --tags)
     - bash ../check_commit.sh master "$TRAVIS_OS_NAME"
     - 'if [ -e travis.cancel ]; then
           exit 0;
