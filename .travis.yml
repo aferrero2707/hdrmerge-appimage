@@ -3,8 +3,8 @@ language: generic
 sudo: required
 
 os:
-  #- linux
-  - osx
+  - linux
+  #- osx
 
 osx_image: xcode8
 
