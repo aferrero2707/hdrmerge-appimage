@@ -19,7 +19,7 @@ addons:
       - curl
 
 before_install:
-    - brew update
+    #- brew update
   
 before_script:
     #- echo "SLUG: $TRAVIS_REPO_SLUG"
