@@ -111,7 +111,12 @@ cp $(ldconfig -p | grep libgtk-x11-2.0.so.0 | cut -d ">" -f 2 | xargs) ./usr/lib
 
 GLIBC_NEEDED=$(glibc_needed)
 #export VERSION=$(git rev-parse --short HEAD)-$(date +%Y%m%d).glibc$GLIBC_NEEDED
-export VERSION=git-$(date +%Y%m%d)
+#export VERSION=git-$(date +%Y%m%d)
+if [ x"${BUILD_BRANCH}" = "xreleases" ]; then
+	export VERSION="$(git describe --tags --always)-$(date +%Y%m%d)"
+else
+	export VERSION="${BUILD_BRANCH}-$(git describe --tags --always)-$(date +%Y%m%d)"
+fi
 echo $VERSION
 
 cd "$APPDIR"

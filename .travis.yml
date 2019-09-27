@@ -18,21 +18,25 @@ addons:
       - wget
       - curl
 
+env: 
+  - BUILD_BRANCH=master
+  - BUILD_BRANCH=release-v0.6
+
 before_install:
     #- brew update
   
 before_script:
     #- echo "SLUG: $TRAVIS_REPO_SLUG"
-    - git clone https://github.com/jcelaya/hdrmerge.git
-    - cd hdrmerge && export GHTAG=$(git describe --tags)
-    - bash ../check_commit.sh master "$TRAVIS_OS_NAME"
+    - git clone https://github.com/jcelaya/hdrmerge.git --branch "${BUILD_BRANCH}" --single-branch
+    - cd hdrmerge && export GHTAG=$(git describe --tags --always)
+    - bash ../check_commit.sh "${BUILD_BRANCH}" "$TRAVIS_OS_NAME"
     - 'if [ -e travis.cancel ]; then
           exit 0;
       fi'
 
 script:
     - cd $TRAVIS_BUILD_DIR
-    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo docker run -it -v $(pwd):/sources centos:7 bash /sources/mkappimage.sh; fi
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo docker run -it -v $(pwd):/sources -e "BUILD_BRANCH=${BUILD_BRANCH}" centos:7 bash /sources/mkappimage.sh; fi
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then bash ./build-osx.sh; fi
     
 
