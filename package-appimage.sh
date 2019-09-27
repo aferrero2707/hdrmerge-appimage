@@ -113,9 +113,9 @@ GLIBC_NEEDED=$(glibc_needed)
 #export VERSION=$(git rev-parse --short HEAD)-$(date +%Y%m%d).glibc$GLIBC_NEEDED
 #export VERSION=git-$(date +%Y%m%d)
 if [ x"${BUILD_BRANCH}" = "xreleases" ]; then
-	export VERSION="$(git describe --tags --always)-$(date +%Y%m%d)"
+	export VERSION="${GIT_DESCRIBE}-$(date +%Y%m%d)"
 else
-	export VERSION="${BUILD_BRANCH}-$(git describe --tags --always)-$(date +%Y%m%d)"
+	export VERSION="${BUILD_BRANCH}-${GIT_DESCRIBE}-$(date +%Y%m%d)"
 fi
 echo $VERSION
 
