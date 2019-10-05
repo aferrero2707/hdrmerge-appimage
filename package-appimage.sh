@@ -113,9 +113,9 @@ GLIBC_NEEDED=$(glibc_needed)
 #export VERSION=$(git rev-parse --short HEAD)-$(date +%Y%m%d).glibc$GLIBC_NEEDED
 #export VERSION=git-$(date +%Y%m%d)
 if [ x"${BUILD_BRANCH}" = "xreleases" ]; then
-	export VERSION="${GIT_DESCRIBE}-$(date +%Y%m%d)"
+	export VERSION="${GIT_DESCRIBE}_$(date +%Y%m%d)"
 else
-	export VERSION="${BUILD_BRANCH}-${GIT_DESCRIBE}-$(date +%Y%m%d)"
+	export VERSION="${BUILD_BRANCH}_${GIT_DESCRIBE}_$(date +%Y%m%d)"
 fi
 echo $VERSION
 
@@ -136,8 +136,10 @@ export DOCKER_BUILD=true
 generate_type2_appimage
 
 pwd
-ls ../out/*
-mkdir -p /sources/out
+ls ../out/* || exit 1
+mkdir -p /sources/out || exit 1
+mv ../out/*.AppImage ../out/__temp__.AppImage || exit 1
+mv ../out/__temp__.AppImage ../out/${APP}_${VERSION}.AppImage || exit 1
 cp ../out/*.AppImage /sources/out
 
 ########################################################################
