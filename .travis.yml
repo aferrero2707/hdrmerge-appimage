@@ -10,23 +10,7 @@ matrix:
           services: docker
           env: TARGET_SYSTEM=Linux
           before_script:
-            - echo "TARGET_SYSTEM: ${TARGET_SYSTEM}    BUILD_BRANCH: ${BUILD_BRANCH}"
-
-        - os: linux
-          dist: trusty
-          compiler: g++
-          sudo: required
-          dist: trusty
-          env: TARGET_SYSTEM=Windows
-          before_script:
-            - echo "TARGET_SYSTEM: ${TARGET_SYSTEM}    BUILD_BRANCH: ${BUILD_BRANCH}"
-
-        - os: osx
-          cache: ccache
-          osx_image: xcode7.3
-          before_script:
-            - echo "TARGET_SYSTEM: ${TARGET_SYSTEM}    BUILD_BRANCH: ${BUILD_BRANCH}"
-
+            - echo "TARGET_SYSTEM Linux"
 
 branches:
   except:
