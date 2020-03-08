@@ -1,6 +1,9 @@
 language: generic
 
-#env:
+env:
+  - BUILD_BRANCH=master
+  - BUILD_BRANCH=release-v0.6
+  
 matrix:
     include:
         - os: linux
