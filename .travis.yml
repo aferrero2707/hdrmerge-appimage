@@ -21,6 +21,13 @@ matrix:
           before_script:
             - echo "TARGET_SYSTEM Windows"
 
+        - os: osx
+          cache: ccache
+          osx_image: xcode7.3
+          env: TARGET_SYSTEM=OSX
+          before_script:
+            - echo "TARGET_SYSTEM macOS"
+
 branches:
   except:
     - # Do not build tags that we create when we upload to GitHub Releases
