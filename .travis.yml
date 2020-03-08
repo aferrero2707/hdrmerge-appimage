@@ -15,7 +15,7 @@ matrix:
           sudo: required
           services: docker
           env: TARGET_SYSTEM=Linux
-          before_script:
+          script:
             - echo "TARGET_SYSTEM: ${TARGET_SYSTEM}    BUILD_BRANCH: ${BUILD_BRANCH}"
 
 
