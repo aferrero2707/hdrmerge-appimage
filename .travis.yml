@@ -1,9 +1,5 @@
 language: generic
 
-env:
-  - BUILD_BRANCH=master
-  - BUILD_BRANCH=release-v0.6
-  
 matrix:
     include:
         - os: linux
@@ -11,7 +7,9 @@ matrix:
           compiler: g++
           sudo: required
           services: docker
-          #env: TARGET_SYSTEM=Linux
+          env:
+              - BUILD_BRANCH=master
+              - BUILD_BRANCH=release-v0.6
           before_script:
             - echo "TARGET_SYSTEM Linux"
 
@@ -20,7 +18,9 @@ matrix:
           compiler: g++
           sudo: required
           services: docker
-          #env: TARGET_SYSTEM=Windows
+          env:
+              - BUILD_BRANCH=master
+              - BUILD_BRANCH=release-v0.6
           before_script:
             - echo "TARGET_SYSTEM Windows"
 
