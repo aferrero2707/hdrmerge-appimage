@@ -18,15 +18,6 @@ matrix:
           before_script:
             - echo "TARGET_SYSTEM: ${TARGET_SYSTEM}    BUILD_BRANCH: ${BUILD_BRANCH}"
 
-        - os: linux
-          dist: trusty
-          compiler: g++
-          sudo: required
-          services: docker
-          env: TARGET_SYSTEM=Windows
-          before_script:
-            - echo "TARGET_SYSTEM: ${TARGET_SYSTEM}    BUILD_BRANCH: ${BUILD_BRANCH}"
-
 
 
 branches:
